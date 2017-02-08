@@ -17,7 +17,6 @@ from datetime import timedelta, datetime, date
 
 import humanize
 import pandas as pd
-import requests
 import sqlalchemy as sqla
 from sqlalchemy.engine.url import make_url
 from sqlalchemy.orm import subqueryload
@@ -36,6 +35,12 @@ from pydruid.utils.filters import Dimension, Filter
 from pydruid.utils.postaggregator import Postaggregator
 from pydruid.utils.having import Aggregation
 from six import string_types
+try:
+    # python3
+    import urllib.request as urllib_request
+except ImportError:
+    # python2
+    import urllib2 as urllib_request
 
 from sqlalchemy import (
     Column, Integer, String, ForeignKey, Text, Boolean,
@@ -1559,19 +1564,25 @@ class DruidCluster(Model, AuditMixinNullable):
             self.broker_endpoint)
         return cli
 
+    def fetch_json(self, endpoint):
+        req = urllib_request.Request(endpoint)
+        res = urllib_request.urlopen(req)
+        string_result = res.read().decode("utf-8")
+        return json.loads(string_result)
+
     def get_datasources(self):
         endpoint = (
             "http://{obj.coordinator_host}:{obj.coordinator_port}/"
             "{obj.coordinator_endpoint}/datasources"
         ).format(obj=self)
 
-        return json.loads(requests.get(endpoint).text)
+        return self.fetch_json(endpoint)
 
     def get_druid_version(self):
         endpoint = (
             "http://{obj.coordinator_host}:{obj.coordinator_port}/status"
         ).format(obj=self)
-        return json.loads(requests.get(endpoint).text)['version']
+        return self.fetch_json(endpoint)['version']
 
     def refresh_datasources(self, datasource_name=None):
         """Refresh metadata of all datasources in the cluster
