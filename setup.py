@@ -39,13 +39,16 @@ setup(
         'requests==2.10.0',
         'simplejson==3.8.2',
         'six==1.10.0',
-        'sqlalchemy==1.0.13',
+        'sqlalchemy==1.1.5',
         'sqlalchemy-utils==0.32.7',
         'sqlparse==0.1.19',
         'thrift>=0.9.3',
         'thrift-sasl>=0.2.1',
         'werkzeug==0.11.10',
-        'urllib-kerberos==0.2.0'
+        'urllib-kerberos==0.2.0', 
+        'kerberos==1.2.5',
+        'PyMySQL==0.7.9',
+        'PyGreSQL==5.0.3'
     ],
     extras_require={
         'cors': ['Flask-Cors>=2.0.0'],
