@@ -118,3 +118,55 @@ def worker():
         'traceback': True,
     }
     c_worker.run(**options)
+
+@manager.option(
+    '-n', '--name',
+    help=(" Specify the cluster name"))
+@manager.option(
+    '--coordinator-host',
+    help=(" Specify the druid coordinator host"))
+@manager.option(
+    '--coordinator-port',
+    help=(" Specify the druid coordinator port"))
+@manager.option(
+    '--coordinator-endpoint',
+    help=(" Specify the druid coordinator endpoint"))
+@manager.option(
+    '--broker-host',
+    help=(" Specify the druid broker host"))
+@manager.option(
+    '--broker-port',
+    help=(" Specify the druid broker port"))
+@manager.option(
+    '--broker-endpoint',
+    help=(" Specify the druid broker endpoint"))
+@manager.option(
+    '--cache-timeout',
+    help=(" Specify cache timeout"))
+def configure_druid_cluster(name, coordinator_host, coordinator_port, coordinator_endpoint,  broker_host, broker_port, broker_endpoint, cache_timeout):
+    """Configure Druid Cluster"""
+    session = db.session()
+    from superset import models
+    cluster = session.query(models.DruidCluster).filter_by(cluster_name=name).first()
+    if not cluster:
+        # Add new cluster
+        cluster = models.DruidCluster(cluster_name = name,
+                                      coordinator_host = coordinator_host,
+                                      coordinator_port = coordinator_port,
+                                      coordinator_endpoint = coordinator_endpoint,
+                                      broker_host = broker_host,
+                                      broker_port = broker_port,
+                                      cache_timeout = cache_timeout)
+        session.add(cluster)
+
+    else :
+        # Update existing cluster details.
+        cluster.coordinator_host = coordinator_host
+        cluster.coordinator_port = coordinator_port
+        cluster.coordinator_endpoint = coordinator_endpoint
+        cluster.broker_host = broker_host
+        cluster.broker_port = broker_port
+        cluster.broker_endpoint = broker_endpoint
+        cluster.cache_timeout = cache_timeout
+
+    session.commit()
