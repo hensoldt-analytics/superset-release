@@ -35,6 +35,13 @@ from superset.utils import (
     DimSelector, DTTM_ALIAS, flasher, MetricPermException,
 )
 
+try:
+    # python3
+    import urllib.request as urllib_request
+except ImportError:
+    # python2
+    import urllib2 as urllib_request
+
 DRUID_TZ = conf.get('DRUID_TZ')
 
 
@@ -107,19 +114,25 @@ class DruidCluster(Model, AuditMixinNullable, ImportMixin):
             self.broker_endpoint)
         return cli
 
+    def fetch_json(self, endpoint):
+        req = urllib_request.Request(endpoint)
+        res = urllib_request.urlopen(req)
+        string_result = res.read().decode("utf-8")
+        return json.loads(string_result)
+
     def get_datasources(self):
         endpoint = (
             'http://{obj.coordinator_host}:{obj.coordinator_port}/'
             '{obj.coordinator_endpoint}/datasources'
         ).format(obj=self)
 
-        return json.loads(requests.get(endpoint).text)
+        return self.fetch_json(endpoint)
 
     def get_druid_version(self):
         endpoint = (
             'http://{obj.coordinator_host}:{obj.coordinator_port}/status'
         ).format(obj=self)
-        return json.loads(requests.get(endpoint).text)['version']
+        return self.fetch_json(endpoint)['version']
 
     def refresh_datasources(
             self,
