@@ -1,34 +1,40 @@
 (function ($) {
 
-    function initSelect2Sortable(selectElement) {
-        selectElement.select2();
-        var choices = selectElement.prev('.select2-container').find('ul.select2-choices');
+    function initSortableChoices(choices, options) {
 
-        var valueChangeObserver = new MutationObserver(function (mutations) {
-            choices.sortable({
-                forcePlaceholderSize: true,
-                items: 'li.select2-search-choice',
-                placeholder: '<li>&nbsp;</li>'
-            });
-            valueChangeObserver.disconnect();
-        });
-
-        selectElement.on('select2-selecting', function () {
-            valueChangeObserver.observe(choices.get(0), {subtree: false, childList: true, attributes: false});
-        });
         choices.sortable({
             forcePlaceholderSize: true,
             items: 'li.select2-search-choice',
             placeholder: '<li>&nbsp;</li>'
         });
-        choices.bind('sortupdate', function (e, ui) {
-            $(choices.find('li.select2-search-choice').get().reverse()).each(function () {
-                var id = $(this).data('select2Data').id,
-                    $option = options.selectElement.find('option[value="' + id + '"]')[0];
 
-                options.selectElement.prepend($option);
+        // Only bind event at initialization
+        if (options && options.bindSortEvent && options.selectElement) {
+            choices.bind('sortupdate', function (e, ui) {
+                $(choices.find('li.select2-search-choice').get().reverse()).each(function () {
+                    var id = $(this).data('select2Data').id,
+                        $option = options.selectElement.find('option[value="' + id + '"]')[0];
+
+                    options.selectElement.prepend($option);
+                });
             });
+        }
+    };
+
+    function initSelect2Sortable(selectElement) {
+        selectElement.select2();
+        var choices = selectElement.prev('.select2-container').find('ul.select2-choices');
+
+        var observer = new MutationObserver(function (mutations) {
+            initSortableChoices(choices);
+            observer.disconnect();
         });
+
+        selectElement.on('select2-selecting', function () {
+            observer.observe(choices.get(0), {subtree: false, childList: true, attributes: false});
+        });
+
+        initSortableChoices(choices, {bindSortEvent: true, selectElement: selectElement});
 
         selectElement.data('hasSelect2Sortable', true);
     };
@@ -54,14 +60,9 @@
             this.each(function () {
                 var selectElement = $(this);
                 // Only sort multiple selects
-                if (!selectElement.prop('multiple')) {
+                if (selectElement.prop('multiple')) {
                     if (!selectElement.data('hasSelect2Sortable')) {
-                        choices.sortable({
-                            forcePlaceholderSize: true,
-                            items: 'li.select2-search-choice',
-                            placeholder: '<li>&nbsp;</li>'
-                        });
-
+                        initSelect2Sortable(selectElement);
                         if (selectElement.attr('data-order')) {
                             sortSelect2Sortable(selectElement, selectElement.attr('data-order').split(','));
                         }
@@ -75,4 +76,4 @@
             return this;
         }
     });
-}(jQuery));
+}(window.jQuery));
