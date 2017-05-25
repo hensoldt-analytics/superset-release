@@ -32,6 +32,7 @@ setup(
         'humanize==0.5.1',
         'gunicorn==19.6.0',
         'markdown==2.6.6',
+        'numpy==1.13.0rc2',
         'pandas==0.18.1',
         'parsedatetime==2.0.0',
         'pydruid==0.3.0',
