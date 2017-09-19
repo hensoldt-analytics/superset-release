@@ -1548,7 +1548,7 @@ class DruidCluster(Model, AuditMixinNullable):
     coordinator_host = Column(String(255))
     coordinator_port = Column(Integer)
     coordinator_endpoint = Column(
-        String(255), default='druid/coordinator/v1/metadata')
+        String(255), default='druid/coordinator/v1')
     broker_host = Column(String(255))
     broker_port = Column(Integer)
     broker_endpoint = Column(String(255), default='druid/v2')
