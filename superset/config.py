@@ -76,7 +76,7 @@ APP_ICON = "/static/assets/images/superset-logo@2x.png"
 # tz.tzlocal() : Using local timezone
 # other tz can be overridden by providing a local_config
 DRUID_IS_ACTIVE = True
-DRUID_TZ = tz.tzutc()
+DRUID_TZ = tz.tzlocal()
 
 # ----------------------------------------------------
 # AUTHENTICATION CONFIG
