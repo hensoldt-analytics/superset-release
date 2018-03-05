@@ -24,10 +24,10 @@ version_info = {
     'GIT_SHA': GIT_SHA,
     'version': version_string,
 }
-print('-==-' * 15)
-print('VERSION: ' + version_string)
-print('GIT SHA: ' + GIT_SHA)
-print('-==-' * 15)
+#print('-==-' * 15)
+#print('VERSION: ' + version_string)
+#print('GIT SHA: ' + GIT_SHA)
+#print('-==-' * 15)
 
 with open(os.path.join(PACKAGE_DIR, 'version_info.json'), 'w') as version_file:
     json.dump(version_info, version_file)
