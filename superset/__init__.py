@@ -109,6 +109,30 @@ if app.config.get('ENABLE_TIME_ROTATE'):
         backupCount=app.config.get('BACKUP_COUNT'))
     logging.getLogger().addHandler(handler)
 
+
+if app.config.get('ENABLE_KERBEROS_AUTHENTICATION'):
+    import urllib_kerberos
+    from superset.kerberos_login import KerberosLoginThread
+    try:
+        # python3
+        import urllib.request as urllib_request
+    except ImportError:
+        # python2
+        import urllib2 as urllib_request
+    cookieProcessor = urllib_request.HTTPCookieProcessor()
+    authencationHandler = urllib_kerberos.HTTPKerberosAuthHandler()
+    opener = urllib_request.build_opener(cookieProcessor, authencationHandler)
+    urllib_request.install_opener(opener)
+    # Start Daemon Thread to run in background. This will make sure we have a valid kerberos ticket
+    background_login_thread = KerberosLoginThread(app.config.get('KERBEROS_KINIT_PATH', '/usr/bin/kinit'),
+                                                  app.config.get('KERBEROS_KEYTAB'),
+                                                  app.config.get('KERBEROS_PRINCIPAL'),
+                                                  app.config.get('KERBEROS_REINIT_TIME_SEC'))
+
+    background_login_thread.name = 'Kerberos-Login-Thread'
+    background_login_thread.daemon=True
+    background_login_thread.start()
+
 if app.config.get('ENABLE_CORS'):
     from flask_cors import CORS
     CORS(app, **app.config.get('CORS_OPTIONS'))

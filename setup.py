@@ -82,6 +82,10 @@ setup(
         'thrift-sasl>=0.2.1',
         'unidecode>=0.04.21',
         'bleach==2.1.2',
+        'urllib-kerberos==0.2.0',
+        'kerberos==1.3.0',
+        'PyMySQL==0.8.0',
+        'PyGreSQL==5.0.4'
     ],
     extras_require={
         'cors': ['Flask-Cors>=2.0.0'],
