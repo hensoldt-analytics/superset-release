@@ -85,7 +85,8 @@ setup(
         'urllib-kerberos==0.2.0',
         'kerberos==1.3.0',
         'PyMySQL==0.8.0',
-        'PyGreSQL==5.0.4'
+        'PyGreSQL==5.0.4',
+        'python-ldap==3.1.0'
     ],
     extras_require={
         'cors': ['Flask-Cors>=2.0.0'],
