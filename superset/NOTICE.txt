@@ -41,6 +41,8 @@ Copyright (c) 2015-2016 Ask Solem & contributors.  All rights reserved.
 
 CFFI 1.7.0 : MIT License
 
+Chardet, version 3.0.4 :  LGPL License 
+
 Click - Python Command Line Utility 6.6 : BSD 3-clause Copyright (c) 2014 by Armin Ronacher.
 Click uses parts of optparse written by Gregory P. Ward and maintained by the
 Python software foundation.  This is limited to code in the parser.py
