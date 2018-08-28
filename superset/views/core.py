@@ -29,7 +29,6 @@ import sqlalchemy as sqla
 from sqlalchemy import create_engine
 from sqlalchemy.engine.url import make_url
 from sqlalchemy.exc import IntegrityError
-from unidecode import unidecode
 from werkzeug.routing import BaseConverter
 from werkzeug.utils import secure_filename
 
@@ -2439,7 +2438,7 @@ class Superset(BaseSupersetView):
             csv = df.to_csv(index=False, **config.get('CSV_EXPORT'))
         response = Response(csv, mimetype='text/csv')
         response.headers['Content-Disposition'] = (
-            'attachment; filename={}.csv'.format(unidecode(query.name)))
+            'attachment; filename={}.csv'.format(query.name))
         logging.info('Ready to return response')
         return response
 
