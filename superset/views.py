@@ -1448,9 +1448,8 @@ class Superset(BaseSupersetView):
                 "danger")
             return redirect(
                 'superset/request_access/?'
-                'datasource_type={datasource_type}&'
-                'datasource_id={datasource_id}&'
-                ''.format(**locals()))
+                f'datasource_type={datasource_type}&'
+                f'datasource_id={datasource_id}&')
 
         if not viz_type and viz_obj.datasource.default_endpoint:
             return redirect(viz_obj.datasource.default_endpoint)
@@ -2077,8 +2076,7 @@ class Superset(BaseSupersetView):
                     "danger")
                 return redirect(
                     'superset/request_access/?'
-                    'dashboard_id={dash.id}&'
-                    ''.format(**locals()))
+                    f'dashboard_id={dash.id}&')
 
         # Hack to log the dashboard_id properly, even when getting a slug
         @log_this
@@ -2187,19 +2185,18 @@ class Superset(BaseSupersetView):
             if agg:
                 if agg == 'count_distinct':
                     metrics.append(models.SqlMetric(
-                        metric_name="{agg}__{column_name}".format(**locals()),
-                        expression="COUNT(DISTINCT {column_name})"
-                        .format(**locals()),
+                        metric_name=f"{agg}__{column_name}",
+                        expression=f"COUNT(DISTINCT {column_name})",
                     ))
                 else:
                     metrics.append(models.SqlMetric(
-                        metric_name="{agg}__{column_name}".format(**locals()),
-                        expression="{agg}({column_name})".format(**locals()),
+                        metric_name=f"{agg}__{column_name}",
+                        expression=f"{agg}({column_name})",
                     ))
         if not metrics:
             metrics.append(models.SqlMetric(
-                metric_name="count".format(**locals()),
-                expression="count(*)".format(**locals()),
+                metric_name="count",
+                expression="count(*)",
             ))
         table.columns = cols
         table.metrics = metrics
@@ -2213,7 +2210,7 @@ class Superset(BaseSupersetView):
             'limit': '0',
         }
         params = "&".join([k + '=' + v for k, v in params.items()])
-        url = '/superset/explore/table/{table.id}/?{params}'.format(**locals())
+        url = f'/superset/explore/table/{table.id}/?{params}'
         return redirect(url)
 
     @has_access
@@ -2427,10 +2424,10 @@ class Superset(BaseSupersetView):
             with utils.timeout(
                     seconds=SQLLAB_TIMEOUT,
                     error_message=(
-                        "The query exceeded the {SQLLAB_TIMEOUT} seconds "
+                        f"The query exceeded the {SQLLAB_TIMEOUT} seconds "
                         "timeout. You may want to run your query as a "
                         "`CREATE TABLE AS` to prevent timeouts."
-                    ).format(**locals())):
+                    )):
                 data = sql_lab.get_sql_results(query_id, return_results=True)
         except Exception as e:
             logging.exception(e)

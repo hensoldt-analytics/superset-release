@@ -145,8 +145,8 @@ class BaseViz(object):
             base_endpoint = '/superset/explore_json'
 
         href = Href(
-            '{base_endpoint}/{self.datasource.type}/'
-            '{self.datasource.id}/'.format(**locals()))
+            f'{base_endpoint}/{self.datasource.type}/'
+            f'{self.datasource.id}/')
         if for_cache_key and 'force' in od:
             del od['force']
         return href(od)

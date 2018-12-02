@@ -211,12 +211,12 @@ class PrestoEngineSpec(BaseEngineSpec):
         if limit:
             limit_clause = "LIMIT {}".format(limit)
 
-        return textwrap.dedent("""\
+        return textwrap.dedent(f"""\
         SHOW PARTITIONS
         FROM {table_name}
         {order_by_clause}
         {limit_clause}
-        """).format(**locals())
+        """)
 
     @classmethod
     def extra_table_metadata(cls, database, table_name, schema_name):

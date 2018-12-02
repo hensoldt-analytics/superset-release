@@ -135,7 +135,7 @@ class CoreTests(SupersetTestCase):
                 (slc.slice_name, 'slice_id_url', slc.slice_id_url),
             ]
         for name, method, url in urls:
-            logging.info("[{name}]/[{method}]: {url}".format(**locals()))
+            logging.info(f"[{name}]/[{method}]: {url}")
             self.client.get(url)
 
     def test_slices_V2(self):
@@ -156,7 +156,7 @@ class CoreTests(SupersetTestCase):
                 (slc.slice_name, 'slice_url', slc.slice_url),
             ]
         for name, method, url in urls:
-            print("[{name}]/[{method}]: {url}".format(**locals()))
+            print(f"[{name}]/[{method}]: {url}")
             response = self.client.get(url)
 
     def test_dashboard(self):
@@ -428,8 +428,8 @@ class CoreTests(SupersetTestCase):
         self.login('admin')
         dbid = self.get_main_database(db.session).id
         self.get_json_resp(
-            '/superset/extra_table_metadata/{dbid}/'
-            'ab_permission_view/panoramix/'.format(**locals()))
+            f'/superset/extra_table_metadata/{dbid}/'
+            'ab_permission_view/panoramix/')
 
     def test_process_template(self):
         maindb = self.get_main_database(db.session)

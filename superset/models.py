@@ -180,14 +180,14 @@ class AuditMixinNullable(AuditMixin):
 
     @property
     def icons(self):
-        return """
+        return f"""
         <a
                 href="{self.datasource_edit_url}"
                 data-toggle="tooltip"
                 title="{self.datasource}">
             <i class="fa fa-database"></i>
         </a>
-        """.format(**locals())
+        """
 
 
 class Url(Model, AuditMixinNullable):
@@ -330,7 +330,7 @@ class Slice(Model, AuditMixinNullable, ImportMixin):
     def slice_link(self):
         url = self.slice_url
         name = escape(self.slice_name)
-        return Markup('<a href="{url}">{name}</a>'.format(**locals()))
+        return Markup(f'<a href="{url}">{name}</a>')
 
     def get_viz(self, url_params_multidict=None):
         """Creates :py:class:viz.BaseViz object from the url_params_multidict.
@@ -464,8 +464,7 @@ class Dashboard(Model, AuditMixinNullable, ImportMixin):
 
     def dashboard_link(self):
         title = escape(self.dashboard_title)
-        return Markup(
-            '<a href="{self.url}">{title}</a>'.format(**locals()))
+        return Markup(f'<a href="{self.url}">{title}</a>')
 
     @property
     def json_data(self):
@@ -917,8 +916,7 @@ class SqlaTable(Model, Queryable, AuditMixinNullable, ImportMixin):
     @property
     def link(self):
         name = escape(self.name)
-        return Markup(
-            '<a href="{self.explore_url}">{name}</a>'.format(**locals()))
+        return Markup(f'<a href="{self.explore_url}">{name}</a>')
 
     @property
     def schema_perm(self):
@@ -1675,7 +1673,7 @@ class DruidDatasource(Model, AuditMixinNullable, Queryable):
     @property
     def link(self):
         name = escape(self.datasource_name)
-        return Markup('<a href="{self.url}">{name}</a>').format(**locals())
+        return Markup(f'<a href="{self.url}">{name}</a>')
 
     @property
     def full_name(self):
@@ -1701,7 +1699,7 @@ class DruidDatasource(Model, AuditMixinNullable, Queryable):
     def datasource_link(self):
         url = "/superset/explore/{obj.type}/{obj.id}/".format(obj=self)
         name = escape(self.datasource_name)
-        return Markup('<a href="{url}">{name}</a>'.format(**locals()))
+        return Markup(f'<a href="{url}">{name}</a>')
 
     def get_metric_obj(self, metric_name):
         return [
@@ -2593,7 +2591,7 @@ class Query(Model):
         ts = ts.replace('-', '').replace(':', '').split('.')[0]
         tab = self.tab_name.replace(' ', '_').lower() if self.tab_name else 'notab'
         tab = re.sub(r'\W+', '', tab)
-        return "sqllab_{tab}_{ts}".format(**locals())
+        return f"sqllab_{tab}_{ts}"
 
 
 class DatasourceAccessRequest(Model, AuditMixinNullable):
@@ -2638,10 +2636,9 @@ class DatasourceAccessRequest(Model, AuditMixinNullable):
             if r.name in self.ROLES_BLACKLIST:
                 continue
             url = (
-                '/superset/approve?datasource_type={self.datasource_type}&'
-                'datasource_id={self.datasource_id}&'
-                'created_by={self.created_by.username}&role_to_grant={r.name}'
-                .format(**locals())
+                f'/superset/approve?datasource_type={self.datasource_type}&'
+                f'datasource_id={self.datasource_id}&'
+                f'created_by={self.created_by.username}&role_to_grant={r.name}'
             )
             href = '<a href="{}">Grant {} Role</a>'.format(url, r.name)
             action_list = action_list + '<li>' + href + '</li>'
@@ -2652,10 +2649,9 @@ class DatasourceAccessRequest(Model, AuditMixinNullable):
         action_list = ''
         for r in self.created_by.roles:
             url = (
-                '/superset/approve?datasource_type={self.datasource_type}&'
-                'datasource_id={self.datasource_id}&'
-                'created_by={self.created_by.username}&role_to_extend={r.name}'
-                .format(**locals())
+                f'/superset/approve?datasource_type={self.datasource_type}&'
+                f'datasource_id={self.datasource_id}&'
+                f'created_by={self.created_by.username}&role_to_extend={r.name}'
             )
             href = '<a href="{}">Extend {} Role</a>'.format(url, r.name)
             if r.name in self.ROLES_BLACKLIST:
