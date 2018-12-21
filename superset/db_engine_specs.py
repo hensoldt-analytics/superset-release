@@ -25,7 +25,6 @@ import re
 import textwrap
 import time
 
-import boto3
 from flask import g
 from flask_babel import lazy_gettext as _
 import pandas
@@ -869,6 +868,9 @@ class HiveEngineSpec(PrestoEngineSpec):
         column_names = get_column_names(upload_path)
         schema_definition = ', '.join(
             [s + ' STRING ' for s in column_names])
+
+        # Optional dependency
+        import boto3  # pylint: disable=import-error
 
         s3 = boto3.client('s3')
         location = os.path.join('s3a://', bucket_path, upload_prefix, table_name)
