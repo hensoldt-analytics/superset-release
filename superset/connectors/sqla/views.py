@@ -5,7 +5,6 @@ from flask_appbuilder.actions import action
 from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_babel import gettext as __
 from flask_babel import lazy_gettext as _
-from past.builtins import basestring
 
 from superset import appbuilder, db, security, sm, utils
 from superset.connectors.base.views import DatasourceModelView
@@ -269,7 +268,7 @@ class TableModelView(DatasourceModelView, DeleteMixin, YamlExportMixin):  # noqa
     def edit(self, pk):
         """Simple hack to redirect to explore view after saving"""
         resp = super(TableModelView, self).edit(pk)
-        if isinstance(resp, basestring):
+        if isinstance(resp, str):
             return resp
         return redirect('/superset/explore/table/{}/'.format(pk))
 
