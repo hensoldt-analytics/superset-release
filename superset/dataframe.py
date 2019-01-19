@@ -16,7 +16,6 @@ import numpy as np
 import pandas as pd
 from pandas.core.common import _maybe_box_datetimelike
 from pandas.core.dtypes.dtypes import ExtensionDtype
-from past.builtins import basestring
 
 
 INFER_COL_TYPES_THRESHOLD = 95
@@ -125,7 +124,7 @@ class SupersetDataFrame(object):
 
             if column['type'] in ('OBJECT', None):
                 v = sample[col].iloc[0] if not sample[col].empty else None
-                if isinstance(v, basestring):
+                if isinstance(v, str):
                     column['type'] = 'STRING'
                 elif isinstance(v, int):
                     column['type'] = 'INT'
