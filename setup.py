@@ -30,6 +30,7 @@ setup(
         'flask-script==2.0.5',
         'flask-testing==0.5.0',
         'flask-sqlalchemy==2.0',
+        'defusedxml==0.5.0',
         'humanize==0.5.1',
         'gunicorn==19.6.0',
         'markdown==2.6.6',
