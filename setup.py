@@ -74,6 +74,7 @@ setup(
         'python-dateutil==2.6.1',
         'pyyaml>=3.11',
         'requests==2.18.4',
+        'setuptools>=30.4'
         'simplejson==3.13.2',
         'six==1.11.0',
         'sqlalchemy==1.2.2',
