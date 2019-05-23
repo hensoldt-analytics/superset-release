@@ -70,11 +70,13 @@ setup(
         'parsedatetime==2.0.0',
         'pathlib2==2.3.0',
         'polyline==1.3.2',
+        'pytest-runner<5',
         'pydruid==0.4.2',
         'PyHive>=0.4.0',
         'python-dateutil==2.6.1',
         'pyyaml>=3.11',
         'requests==2.18.4',
+        'setuptools>=30.4'
         'simplejson==3.13.2',
         'six==1.11.0',
         'sqlalchemy==1.2.2',
