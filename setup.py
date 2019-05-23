@@ -69,6 +69,7 @@ setup(
         'parsedatetime==2.0.0',
         'pathlib2==2.3.0',
         'polyline==1.3.2',
+        'pytest-runner<5',
         'pydruid==0.4.2',
         'PyHive>=0.4.0',
         'python-dateutil==2.6.1',
