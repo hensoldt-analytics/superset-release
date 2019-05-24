@@ -57,7 +57,7 @@ setup(
         'flask-migrate==1.5.1',
         'flask-script==2.0.5',
         'flask-testing==0.5.0',
-        'flask-sqlalchemy==2.0',
+        'flask-sqlalchemy==2.1',
         'defusedxml==0.5.0',
         'humanize==0.5.1',
         'gunicorn==19.6.0',
