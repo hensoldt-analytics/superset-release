@@ -49,7 +49,7 @@ setup(
         'celery==4.1.0',
         'click==6.7',
         'colorama==0.3.9',
-        'cryptography==1.9',
+        'cryptography==2.0',
         'defusedxml==0.5.0',
         'flask==0.12.2',
         'flask-appbuilder==1.9.6',
