@@ -59,6 +59,7 @@ setup(
         'flask-sqlalchemy==2.1',
         'flask-testing==0.7.1',
         'flask-wtf==0.14.2',
+        'future>=0.16.0, <0.17',
         'python-geohash==0.8.5',
         'humanize==0.5.1',
         'gunicorn==19.7.1',
