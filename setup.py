@@ -66,6 +66,7 @@ setup(
         'idna==2.6',
         'kerberos==1.3.0',
         'markdown==2.6.11',
+        'numpy==1.16.4',
         'pandas==0.22.0',
         'parsedatetime==2.0.0',
         'pathlib2==2.3.0',
