@@ -66,6 +66,7 @@ setup(
         'gunicorn==19.7.1',
         'idna==2.6',
         'markdown==2.6.11',
+        'numpy==1.16.4',
         'pandas==0.22.0',
         'parsedatetime==2.0.0',
         'pathlib2==2.3.0',
