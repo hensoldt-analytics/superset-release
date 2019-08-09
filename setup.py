@@ -34,7 +34,7 @@ setup(
         'gunicorn==19.6.0',
         'markdown==2.6.6',
         'numpy==1.13.0rc2',
-        'pandas==0.18.1',
+        'pandas==0.21.1',
         'parsedatetime==2.0.0',
         'pydruid==0.3.0',
         'PyHive>=0.2.1',
