@@ -42,7 +42,7 @@ setup(
         'python-dateutil==2.5.3',
         'requests==2.10.0',
         'simplejson==3.8.2',
-        'six==1.10.0',
+        'six>=1.10.0',
         'sqlalchemy==1.1.5',
         'sqlalchemy-utils==0.32.7',
         'sqlparse==0.1.19',
