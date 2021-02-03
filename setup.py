@@ -45,6 +45,7 @@ setup(
     zip_safe=False,
     scripts=['superset/bin/superset'],
     install_requires=[
+        'alembic==0.6.7',
         'bleach==2.1.2',
         'celery==4.1.0',
         'click==6.7',
